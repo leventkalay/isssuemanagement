@@ -25,6 +25,4 @@ public class Project extends BaseEntity {
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private User manager;
 
-
-
 }

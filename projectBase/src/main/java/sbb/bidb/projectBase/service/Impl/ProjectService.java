@@ -1,8 +1,10 @@
 package sbb.bidb.projectBase.service.Impl;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import sbb.bidb.projectBase.dto.ProjectDto;
 import sbb.bidb.projectBase.entity.Project;
 import sbb.bidb.projectBase.repo.ProjectRepository;
 import sbb.bidb.projectBase.service.IProjectService;
@@ -13,22 +15,26 @@ import java.util.List;
 public class ProjectService implements IProjectService {
 
     private final ProjectRepository projectRepository;
+    private final ModelMapper modelMapper;
 
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository,ModelMapper modelMapper) {
         this.projectRepository = projectRepository;
+        this.modelMapper = modelMapper;
     }
+
     @Override
-    public Project save(Project project) {
-        if(project.getProjectCode()== null)
-        {
+    public ProjectDto save(ProjectDto projectDto) {
+        if (projectDto.getProjectCode() == null) {
             throw new IllegalArgumentException("Project Code cannot be null");
         }
-        return projectRepository.save(project);
+        Project projectDb = projectRepository.save(modelMapper.map(projectDto, Project.class));
+        return modelMapper.map(projectDb, ProjectDto.class);
     }
 
     @Override
-    public Project getById(Long id) {
-        return projectRepository.getOne(id);
+    public ProjectDto getById(Long id) {
+        Project p = projectRepository.getOne(id);
+        return modelMapper.map(p, ProjectDto.class);
     }
 
     @Override

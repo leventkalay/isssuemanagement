@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import sbb.bidb.projectBase.entity.Project;
-import sbb.bidb.projectBase.entity.User;
 
 import java.util.List;
 
