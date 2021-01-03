@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface IProjectService {
     ProjectDto save (ProjectDto projectDto);
+    ProjectDto update (Long id, ProjectDto project);
     ProjectDto getById(Long id);
-    List<Project> getByProjectCode(String projectCode);
-    List<Project> getByProjectCodeContains(String projectCode);
+    Project getByProjectCode(String projectCode);
     Page <Project> getAllPageable (Pageable pageable);
     Boolean delete(Project project);
 }

@@ -9,8 +9,13 @@ import sbb.bidb.projectBase.entity.Project;
 import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project,Long> {
-    List<Project> getByProjectCode (String ProjectCode);
-    List<Project> getByProjectCodeContains (String ProjectCode);
-    Page<Project> findAll (Pageable page);
-    List<Project> findAllBy (Sort sort);
+    Project getByProjectCode(String projectCode);
+
+    Project getByProjectCodeAndIdNot(String projectCode, Long id);
+
+    List<Project> getByProjectCodeContains(String projectCode);
+
+    Page<Project> findAll(Pageable pageable);
+
+    List<Project> findAll(Sort sort);
 }

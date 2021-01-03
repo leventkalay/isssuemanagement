@@ -24,10 +24,30 @@ public class ProjectService implements IProjectService {
 
     @Override
     public ProjectDto save(ProjectDto projectDto) {
-        if (projectDto.getProjectCode() == null) {
-            throw new IllegalArgumentException("Project Code cannot be null");
+        Project projectCheck = projectRepository.getByProjectCode(projectDto.getProjectCode());
+        if (projectCheck!= null) {
+            throw new IllegalArgumentException("Project Code Already Exist");
         }
         Project projectDb = projectRepository.save(modelMapper.map(projectDto, Project.class));
+        projectDto.setId(projectDb.getId());
+        return projectDto;
+    }
+
+    @Override
+    public ProjectDto update (Long id, ProjectDto project)
+    {
+        Project projectDb = projectRepository.getOne(id);
+        if (projectDb == null)
+            throw new IllegalArgumentException("Project Does Not Exist ID:" + id);
+
+        Project projectCheck = projectRepository.getByProjectCodeAndIdNot(project.getProjectCode(), id);
+        if (projectCheck != null)
+            throw new IllegalArgumentException("Project Code Already Exist");
+
+        projectDb.setProjectCode(project.getProjectCode());
+        projectDb.setProjectName(project.getProjectName());
+
+        projectRepository.save(projectDb);
         return modelMapper.map(projectDb, ProjectDto.class);
     }
 
@@ -38,13 +58,8 @@ public class ProjectService implements IProjectService {
     }
 
     @Override
-    public List<Project> getByProjectCode(String projectCode) {
+    public Project getByProjectCode(String projectCode) {
         return projectRepository.getByProjectCode(projectCode);
-    }
-
-    @Override
-    public List<Project> getByProjectCodeContains(String projectCode) {
-        return projectRepository.getByProjectCodeContains(projectCode) ;
     }
 
     @Override
