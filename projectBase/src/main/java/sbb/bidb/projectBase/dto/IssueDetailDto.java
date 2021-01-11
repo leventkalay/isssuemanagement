@@ -1,12 +1,17 @@
 package sbb.bidb.projectBase.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import sbb.bidb.projectBase.entity.IssueStatus;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
-public class IssueDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class IssueDetailDto {
     private Long id;
     private String description;
     private String details;
@@ -14,6 +19,6 @@ public class IssueDto {
     private IssueStatus issueStatus;
     private UserDto assignee;
     private ProjectDto project;
-    private Long projectId;
 
+    private List<IssueHistoryDto> issueHistories;
 }

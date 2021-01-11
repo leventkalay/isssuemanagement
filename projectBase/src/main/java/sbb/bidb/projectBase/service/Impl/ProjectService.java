@@ -8,7 +8,9 @@ import sbb.bidb.projectBase.dto.ProjectDto;
 import sbb.bidb.projectBase.entity.Project;
 import sbb.bidb.projectBase.repo.ProjectRepository;
 import sbb.bidb.projectBase.service.IProjectService;
+import sbb.bidb.projectBase.util.TPage;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -63,13 +65,15 @@ public class ProjectService implements IProjectService {
     }
 
     @Override
-    public Page<Project> getAllPageable(Pageable pageable) {
-        return projectRepository.findAll(pageable);
+    public TPage<ProjectDto> getAllPageable(Pageable pageable) {
+        Page<Project> data = projectRepository.findAll(pageable);
+        TPage<ProjectDto> response = new TPage<ProjectDto>();
+        response.setStat(data, Arrays.asList(modelMapper.map(data.getContent(), ProjectDto[].class)));
+        return response;
     }
 
-    @Override
-    public Boolean delete(Project project) {
-          projectRepository.delete(project);
-          return Boolean.TRUE;
+    public Boolean delete(Long id) {
+        projectRepository.deleteById(id);
+        return true;
     }
 }

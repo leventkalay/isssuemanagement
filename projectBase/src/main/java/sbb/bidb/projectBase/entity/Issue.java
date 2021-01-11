@@ -1,6 +1,7 @@
 package sbb.bidb.projectBase.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
@@ -24,6 +25,7 @@ public class Issue extends BaseEntity {
 
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private Date date;
 
     @Column(name = "issue_status")

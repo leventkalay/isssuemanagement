@@ -15,6 +15,7 @@ import sbb.bidb.projectBase.service.IIssueService;
 import sbb.bidb.projectBase.util.TPage;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class IssueHistoryService implements IIssueHistoryService {
@@ -46,5 +47,22 @@ public class IssueHistoryService implements IIssueHistoryService {
         TPage<IssueHistoryDto> response = new TPage<IssueHistoryDto>();
         response.setStat(data, Arrays.asList(modelMapper.map(data.getContent(), IssueHistoryDto[].class)));
         return response;
+    }
+
+    @Override
+    public List<IssueHistoryDto> getByIssueId(Long id) {
+        return Arrays.asList(modelMapper.map(issueHistoryRepository.getByIssueIdOrderById(id), IssueHistoryDto[].class));
+    }
+
+    @Override
+    public void addHistory(Long id, Issue issueDb) {
+        IssueHistory history=new IssueHistory();
+        history.setIssue(issueDb);
+        history.setAssignee(issueDb.getAssignee());
+        history.setDate(issueDb.getDate());
+        history.setDescription(issueDb.getDescription());
+        history.setDetails(issueDb.getDetails());
+        history.setIssueStatus(issueDb.getIssueStatus());
+        issueHistoryRepository.save(history);
     }
 }
