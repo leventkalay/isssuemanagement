@@ -1,13 +1,10 @@
 package sbb.bidb.projectBase;
 
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.repository.init.Jackson2RepositoryPopulatorFactoryBean;
 
 @SpringBootApplication
 public class ProjectBaseApplication {
@@ -29,4 +26,12 @@ public class ProjectBaseApplication {
         factory.setResources(new Resource[]{new ClassPathResource("projects.json")});
         return factory;
     }*/
+
+	/*@Bean
+	public SpringLiquibase liquibase() {
+		SpringLiquibase liquibase = new SpringLiquibase();
+		liquibase.setChangeLog("classpath:liquibase-changeLog.xml");
+		//liquibase.setDataSource(dataSource());
+		return liquibase;
+	}*/
 }
